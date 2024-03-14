@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFrameworks>net8.0,net6.0;netstandard2.0</TargetFrameworks>
+        <LangVersion>12</LangVersion>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Library</OutputType>
+        <Company>Pug Computing</Company>
+        <RepositoryType>Git</RepositoryType>
+        <RepositoryUrl>https://github.com/NDWX/Pug.RestApi.Featuring.git</RepositoryUrl>
+        <AssemblyVersion>0.0.1</AssemblyVersion>
+        <FileVersion>0.0.1</FileVersion>
+        <PackageId>Pug.RestApi.Featuring.AspNet</PackageId>
+        <PackageVersion>0.0.1</PackageVersion>
+        <PackageLicenseExpression>Apache-2.0+</PackageLicenseExpression>
+        <License>Apache2.0</License>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.ApiExplorer" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Pug.RestApi.Featuring.AspNet.Common\Pug.RestApi.Featuring.AspNet.Common.csproj" />
+    </ItemGroup>
+
+</Project>
