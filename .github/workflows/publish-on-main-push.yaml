@@ -1,13 +1,15 @@
-﻿name: develop - build
+﻿name: main - publish
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 env:
-  BuildConfiguration: debug
+  BuildConfiguration: release
   Solution: Pug.RestApi.Featuring.sln
+  ModelsProject: src/Pug.RestApi.Featuring.Models/Pug.RestApi.Featuring.Models.csproj
+  AspNetCommonProject: src/Pug.RestApi.Featuring.AspNet.Common/Pug.RestApi.Featuring.AspNet.Common.csproj
   AspNetProject: src/Pug.RestApi.Featuring.AspNet/Pug.RestApi.Featuring.AspNet.csproj
 
 jobs:
@@ -45,6 +47,36 @@ jobs:
 
       - name: Build Main project
         run: dotnet build --nologo --no-restore --configuration ${{env.BuildConfiguration}} ${{env.AspNetProject}}
+
+      - name: Create packages base folder
+        run: mkdir packages
+
+      - name: Pack Models project
+        run: dotnet pack --output ${{env.PackagesBaseFolder}} --nologo --configuration ${{env.BuildConfiguration}} ${{env.ModelsProject}}
+
+      - name: Publish Models NuGet package to NuGet.org
+        run: dotnet nuget push ${{env.PackagesBaseFolder}}/*.nupkg --api-key ${{secrets.NUGET_APIKEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Clear packages folder
+        run: rm packages/*.nupkg
+
+      - name: Pack AspNet Common project
+        run: dotnet pack --output ${{env.PackagesBaseFolder}} --nologo --configuration ${{env.BuildConfiguration}} ${{env.AspNetCommonProject}}
+
+      - name: Publish AspNet Common NuGet package to NuGet.org
+        run: dotnet nuget push ${{env.PackagesBaseFolder}}/*.nupkg --api-key ${{secrets.NUGET_APIKEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Clear packages folder
+        run: rm packages/*.nupkg
+
+      - name: Pack AspNet project
+        run: dotnet pack --output ${{env.PackagesBaseFolder}} --nologo --configuration ${{env.BuildConfiguration}} ${{env.AspNetProject}}
+
+      - name: Publish AspNet NuGet package to NuGet.org
+        run: dotnet nuget push ${{env.PackagesBaseFolder}}/*.nupkg --api-key ${{secrets.NUGET_APIKEY}} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Clear packages folder
+        run: rm packages/*.nupkg
 
       - name: End Sonar scan
         run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
