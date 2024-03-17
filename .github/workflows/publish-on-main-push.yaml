@@ -11,6 +11,7 @@ env:
   ModelsProject: src/Pug.RestApi.Featuring.Models/Pug.RestApi.Featuring.Models.csproj
   AspNetCommonProject: src/Pug.RestApi.Featuring.AspNet.Common/Pug.RestApi.Featuring.AspNet.Common.csproj
   AspNetProject: src/Pug.RestApi.Featuring.AspNet/Pug.RestApi.Featuring.AspNet.csproj
+  PackagesBaseFolder: packages
 
 jobs:
   build:
