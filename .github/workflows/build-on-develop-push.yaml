@@ -7,7 +7,7 @@ on:
 
 env:
   BuildConfiguration: debug
-  Solution: Pug.RestApi.Featuring.AspNet.sln
+  Solution: Pug.RestApi.Featuring.sln
   AspNetProject: src/Pug.RestApi.Featuring.AspNet/Pug.RestApi.Featuring.AspNet.csproj
 
 jobs:
